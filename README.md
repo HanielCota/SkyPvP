@@ -1,4 +1,5 @@
-SkyPvP Minecraft - Floruit PvP
+**SkyPvP Minecraft - Floruit MC**
+
 Este é um projeto de SkyPvP desenvolvido em Java utilizando a API Spigot para o servidor Floruit PvP. O modo SkyPvP oferece uma experiência competitiva onde os jogadores lutam em ilhas flutuantes, combinando habilidades de combate aéreo com estratégias de sobrevivência. O foco do projeto é criar uma jogabilidade fluida, com funcionalidades customizadas e mecânicas otimizadas para tornar as batalhas mais emocionantes e desafiadoras.
 
 Funcionalidades principais:
