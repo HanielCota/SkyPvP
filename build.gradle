@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.1'
+}
+
+group = 'com.github.hanielfialho'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
+}
+
+dependencies {
+    // Minecraft dependencies
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+
+    // LuckPerms
+    compileOnly 'net.luckperms:api:5.4'
+
+    // Cache framework
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+
+    // Commands framework
+    implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
+
+    // Database connection pool
+    implementation 'com.zaxxer:HikariCP:5.1.0'
+
+    // Lombok for annotation processing
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
+
+tasks.build {
+    dependsOn shadowJar
+}
+
+shadowJar {
+    relocate 'co.aikar.commands', 'com.github.hanielcota.commands'
+    relocate 'co.aikar.locales', 'com.github.hanielcota.locales'
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties(props)
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(props)
+    }
+}
