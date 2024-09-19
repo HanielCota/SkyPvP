@@ -32,11 +32,17 @@ public class Scoreboard implements Listener {
         String title = plugin.getMessageConfig().getConfiguration().getString("scoreboard.title", "§6§lFLORUIT MC");
         if (title == null) return;
 
+        if (title.length() > 32) {
+            title = title.substring(0, 32);
+            Bukkit.getLogger().warning("Scoreboard title exceeded 32 characters and was truncated: \"" + title + "\"");
+        }
+
         board.updateTitle(applyPlaceholders(player, title));
         this.boards.put(player.getUniqueId(), board);
 
         updateBoard(board);
     }
+
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
@@ -58,15 +64,24 @@ public class Scoreboard implements Listener {
         List<String> lines = plugin.getMessageConfig().getConfiguration().getStringList("scoreboard.lines");
         if (lines == null || lines.isEmpty()) return;
 
-        lines.replaceAll(s -> applyPlaceholders(player, s
-                .replace("{online}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
-                .replace("{kills}", String.valueOf(0))
-                .replace("{deaths}", String.valueOf(0))
-                .replace("{rank}", "Noob")
-                .replace("{points}", String.valueOf(plugin.getPlayerPoints().getPoints(player)))));
+        lines.replaceAll(s -> {
+            String line = applyPlaceholders(player, s
+                    .replace("{online}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
+                    .replace("{kills}", String.valueOf(0))
+                    .replace("{deaths}", String.valueOf(0))
+                    .replace("{rank}", "Noob")
+                    .replace("{points}", String.valueOf(plugin.getPlayerPoints().getPoints(player))));
+
+            if (line.length() > 30) {
+                Bukkit.getLogger().warning("Scoreboard line exceeds 30 characters: \"" + line + "\" (Length: " + line.length() + ")");
+            }
+
+            return line.length() > 30 ? line.substring(0, 30) : line;
+        });
 
         board.updateLines(lines.toArray(new String[0]));
     }
+
 
     public void startScoreboardUpdateTask() {
         new BukkitRunnable() {
