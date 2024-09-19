@@ -44,26 +44,25 @@ public class PlayerDeathListener implements Listener {
     }
 
     private void handleMissingSpawnLocation() {
-        plugin.getLog().warn("Warp 'spawn' não encontrado. O jogador não foi teleportado após a morte.");
+        plugin.getLog().warn(plugin.getMessageConfig().getConfiguration().getString("spawn-not-found", "Warp 'spawn' não encontrado. O jogador não foi teleportado após a morte."));
     }
 
     private void teleportPlayerToSpawnWithKiller(Player player, Player killer, Location spawnLocation) {
         player.teleport(spawnLocation);
-        player.sendMessage(new String[]{
-                "",
-                "§cVocê foi morto por §e" + killer.getName(),
-                "§cE perdeu §e" + 8 + " pontos §ccomo resultado.",
-                ""
-        });
+
+        // Mensagens configuráveis ao jogador morto
+        for (String message : plugin.getMessageConfig().getConfiguration().getStringList("death-messages-with-killer")) {
+            player.sendMessage(message
+                    .replace("{killer}", killer.getName())
+                    .replace("{points}", String.valueOf(8)));
+        }
     }
 
     private void teleportPlayerToSpawnWithoutKiller(Player player, Location spawnLocation) {
         player.teleport(spawnLocation);
-        player.sendMessage(new String[]{
-                "",
-                "§cVocê morreu!",
-                "§cE perdeu §e" + 8 + " pontos §ccomo resultado.",
-                ""
-        });
+
+        for (String message : plugin.getMessageConfig().getConfiguration().getStringList("death-messages-no-killer")) {
+            player.sendMessage(message.replace("{points}", String.valueOf(8)));
+        }
     }
 }

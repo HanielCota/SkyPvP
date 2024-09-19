@@ -1,0 +1,43 @@
+spawn-not-found:
+  - "§c§l[ERRO] Localização de spawn não encontrada!"
+
+void-fall-messages:
+  - ""
+  - "§c§l[ATENÇÃO] §cVocê caiu no Void e morreu!"
+  - "§cVocê perdeu §c§l-2 §cpontos por isso."
+  - "§cTente evitar cair para manter seus pontos intactos."
+  - ""
+
+player-kill-messages:
+  - "§eVocê ganhou 10 pontos por matar {killed}."
+
+join-title: "§e§lSKY PVP"
+join-subtitle: "Você entrou no Spawn."
+
+death-messages-with-killer:
+  - ""
+  - "§cVocê foi morto por §e{killer}"
+  - "§cE perdeu §e{points} pontos §ccomo resultado."
+  - ""
+
+death-messages-no-killer:
+  - ""
+  - "§cVocê morreu!"
+  - "§cE perdeu §e{points} pontos §ccomo resultado."
+  - ""
+
+scoreboard:
+  title: "§6§lFLORUIT MC"
+  lines:
+    - "      §7SkyPvp   "
+    - ""
+    - "  §fOnline: §e{online}"
+    - ""
+    - "  §e§lGERAL:"
+    - "  §fAbates: §a{kills}"
+    - "  §fMortes: §a{deaths}"
+    - "  §fRank: §e{rank}"
+    - ""
+    - "  §fPontos: §a{points}"
+    - ""
+    - "§fplay.§bflor§au§eitmc§f.com"

@@ -21,7 +21,10 @@ public class PlayerKillListener implements Listener {
         if (killer == null) return;
 
         plugin.getPlayerPoints().addPoints(killer, 10);
-        killer.sendMessage("§eVocê ganhou 10 pontos por matar " + killedPlayer.getName());
+
+        for (String message : plugin.getMessageConfig().getConfiguration().getStringList("player-kill-messages")) {
+            killer.sendMessage(message.replace("{killed}", killedPlayer.getName()));
+        }
 
         killer.playSound(killer.getLocation(), Sound.CAT_HISS, 1f, 1f);
     }

@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,7 +27,9 @@ public class Scoreboard implements Listener {
 
         FastBoard board = new FastBoard(player);
 
-        board.updateTitle("§6§lFLORUIT MC");
+        // Título configurável
+        String title = plugin.getMessageConfig().getConfiguration().getString("scoreboard.title", "§6§lFLORUIT MC");
+        board.updateTitle(title);
 
         this.boards.put(player.getUniqueId(), board);
 
@@ -45,20 +48,19 @@ public class Scoreboard implements Listener {
     }
 
     private void updateBoard(FastBoard board) {
-        board.updateLines(
-                "      §7SkyPvp   ",
-                "",
-                "  §fOnline: §e" + Bukkit.getServer().getOnlinePlayers().size(),
-                "",
-                "  §e§lGERAL:",
-                "  §fAbates: §a" + 0,
-                "  §fMortes: §a" + 0,
-                "  §fRank: §eNoob",
-                "",
-                "  §fPontos: §a " + plugin.getPlayerPoints().getPoints(board.getPlayer()),
-                "",
-                "§fplay.§bflor§au§eitmc§f.com"
-        );
+        Player player = board.getPlayer();
+
+        // Linhas configuráveis
+        List<String> lines = plugin.getMessageConfig().getConfiguration().getStringList("scoreboard.lines");
+
+        lines.replaceAll(s -> s
+                .replace("{online}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
+                .replace("{kills}", String.valueOf(0))
+                .replace("{deaths}", String.valueOf(0))
+                .replace("{rank}", "Noob")
+                .replace("{points}", String.valueOf(plugin.getPlayerPoints().getPoints(player))));
+
+        board.updateLines(lines.toArray(new String[0]));
     }
 
     public void startScoreboardUpdateTask() {

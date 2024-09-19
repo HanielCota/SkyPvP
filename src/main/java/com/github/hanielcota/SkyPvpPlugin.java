@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SkyPvpPlugin extends JavaPlugin {
 
     private ConfigUtils locationConfig;
+    private ConfigUtils messageConfig;
     private MinecraftLogger log;
     private LocationUtils locationUtils;
     private CommandRegistry commandRegistry;
@@ -29,7 +30,6 @@ public class SkyPvpPlugin extends JavaPlugin {
         initializeCommandRegistry();
         new Scoreboard(this).startScoreboardUpdateTask();
 
-
         log.info("SkyPvp - Starting...");
     }
 
@@ -39,6 +39,7 @@ public class SkyPvpPlugin extends JavaPlugin {
 
     private void loadConfiguration() {
         locationConfig = new ConfigUtils(this, "locations.yml");
+        messageConfig = new ConfigUtils(this, "messages.yml");
     }
 
     private void initializeUtils() {

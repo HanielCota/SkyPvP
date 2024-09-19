@@ -1,5 +1,6 @@
 package com.github.hanielcota.listener;
 
+import com.github.hanielcota.utils.ConfigUtils;
 import com.github.hanielcota.utils.LocationUtils;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 public class VoidFallListener implements Listener {
 
     private final LocationUtils locationUtils;
+    private final ConfigUtils messageConfig;
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
@@ -24,17 +26,12 @@ public class VoidFallListener implements Listener {
         Location spawnLocation = locationUtils.getLocation("spawn").orElse(null);
 
         if (spawnLocation == null) {
-            player.sendMessage("Localização de spawn não encontrada!");
+            player.sendMessage(String.join("\n", messageConfig.getConfiguration().getStringList("spawn-not-found")));
             return;
         }
 
         player.teleport(spawnLocation);
-        player.sendMessage(new String[]{
-                "",
-                "§c§l[ATENÇÃO] §cVocê caiu no Void e morreu!",
-                "§cVocê perdeu §c§l-2 §cpontos por isso.",
-                "§cTente evitar cair para manter seus pontos intactos.",
-                "",
-        });
+
+        messageConfig.getConfiguration().getStringList("void-fall-messages").forEach(player::sendMessage);
     }
 }

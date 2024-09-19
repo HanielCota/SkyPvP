@@ -20,7 +20,7 @@ public class ListenerRegistry {
         List<Listener> listeners = List.of(
                 new PlayerJoinListener(plugin, plugin.getLocationUtils()),
                 new PlayerDeathListener(plugin, plugin.getLocationUtils()),
-                new VoidFallListener(plugin.getLocationUtils()),
+                new VoidFallListener(plugin.getLocationUtils(), plugin.getMessageConfig()),
                 new Scoreboard(plugin),
                 new PlayerKillListener(plugin),
                 new PlayerQuitListener());

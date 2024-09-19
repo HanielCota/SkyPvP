@@ -33,11 +33,17 @@ public class PlayerJoinListener implements Listener {
     }
 
     private void logSpawnLocationNotFound() {
-        plugin.getLog().warn("Warp 'spawn' não encontrado. O jogador não foi teleportado.");
+        // Mensagem de log configurável
+        plugin.getLog().warn(plugin.getMessageConfig().getConfiguration().getString("spawn-not-found", "Warp 'spawn' não encontrado. O jogador não foi teleportado."));
     }
 
     private void teleportPlayerToSpawn(Player player) {
         locationUtils.teleportPlayer(player, "spawn");
-        TitleUtils.sendTitle(player, "§e§lSKY PVP", "Você entrou no Spawn.");
+
+        // Título configurável
+        String title = plugin.getMessageConfig().getConfiguration().getString("join-title", "§e§lSKY PVP");
+        String subtitle = plugin.getMessageConfig().getConfiguration().getString("join-subtitle", "Você entrou no Spawn.");
+
+        TitleUtils.sendTitle(player, title, subtitle);
     }
 }
