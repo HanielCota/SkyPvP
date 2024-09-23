@@ -33,7 +33,7 @@ dependencies {
     implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
 
     // Database connection pool
-    implementation 'com.zaxxer:HikariCP:5.1.0'
+    implementation 'com.zaxxer:HikariCP:6.0.0'
 
     // Lombok for annotation processing
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
