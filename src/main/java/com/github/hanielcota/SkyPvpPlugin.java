@@ -10,6 +10,9 @@ import com.github.hanielcota.utils.LocationUtils;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import static com.github.hanielcota.task.ItemSpawnTask.startTask;
+
+
 @Getter
 public class SkyPvpPlugin extends JavaPlugin {
 
@@ -29,7 +32,7 @@ public class SkyPvpPlugin extends JavaPlugin {
         initializeListenerRegistry();
         initializeCommandRegistry();
         new Scoreboard(this).startScoreboardUpdateTask();
-
+        startTask(this, locationUtils);
         log.info("SkyPvp - Starting...");
     }
 

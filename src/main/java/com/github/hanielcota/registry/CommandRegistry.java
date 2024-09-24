@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
 import com.github.hanielcota.SkyPvpPlugin;
 import com.github.hanielcota.commands.PointsCommand;
+import com.github.hanielcota.commands.SetItemSpawnCommand;
 import com.github.hanielcota.commands.WarpCommand;
 import com.github.hanielcota.logging.MinecraftLogger;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,8 @@ public class CommandRegistry {
 
         List<BaseCommand> commands = List.of(
                 new WarpCommand(plugin.getLocationUtils()),
-                new PointsCommand(plugin.getPlayerPoints())
+                new PointsCommand(plugin.getPlayerPoints()),
+                new SetItemSpawnCommand(plugin.getLocationUtils())
         );
 
         logger.info("Iniciando o registro de comandos...");
